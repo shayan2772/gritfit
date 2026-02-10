@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GritFit
 
-## Getting Started
+**GritFit** is a premium, mobile-first fitness application built with Next.js 15, Tailwind CSS, and Framer Motion. It features a "luxury" aesthetic, offline PWA capabilities, and AI-powered exercise visualizations.
 
-First, run the development server:
+## 🚀 Getting Started
+
+### 1. Prerequisites
+- Node.js 18+
+- npm
+
+### 2. Installation
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/shayan2772/gritfit.git
+cd gritfit
+npm install
+```
+
+### 3. Running Locally
+Run the development server (Note: use the `--webpack` flag if you encounter PWA issues with Turbopack):
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 4. Building for Production
+To create an optimized production build:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## 📱 Features
+- **Lift Mode**: Curated exercise library with AI visuals.
+- **Run Mode**: Precision timer with immersive animations.
+- **Tools**: BMI Calculator and other health utilities.
+- **Offline Capable**: Installable as a PWA on iOS/Android.
 
-To learn more about Next.js, take a look at the following resources:
+## ☁️ Deployment
+This project is optimized for deployment on [Vercel](https://vercel.com).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To deploy manually via CLI:
+```bash
+npx vercel
+```
