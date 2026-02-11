@@ -21,14 +21,12 @@ export default function HistoryPage() {
     const [tdeeHistory] = useLocalStorage<any[]>("gritfit_tdee_history", []);
     const [dietHistory] = useLocalStorage<any[]>("gritfit_diet_history", []);
 
-    // Summary Statistics
     const stats = useMemo(() => {
         const now = new Date();
         const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
         const weekWorkouts = workouts.filter(w => new Date(w.date) >= startOfWeek);
         const totalCalories = weekWorkouts.reduce((acc, w) => acc + (w.calories || 0), 0);
 
-        // Find best day (most calories)
         const dayCounts: Record<string, number> = {};
         workouts.forEach(w => {
             const day = new Date(w.date).toLocaleDateString([], { weekday: 'long' });
@@ -39,7 +37,7 @@ export default function HistoryPage() {
         return {
             weekCount: weekWorkouts.length,
             calories: totalCalories,
-            streak: weekWorkouts.length > 0 ? 3 : 0, // Simplified streak
+            streak: weekWorkouts.length > 0 ? 3 : 0,
             bestDay
         };
     }, [workouts]);
@@ -51,19 +49,19 @@ export default function HistoryPage() {
 
     const renderSummary = () => (
         <div className="grid grid-cols-2 gap-4 mb-10">
-            <div className="p-5 rounded-3xl bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/20 shadow-sm relative overflow-hidden group">
+            <div className="p-5 rounded-3xl bg-[#1A1A1A] border border-white/5 shadow-card relative overflow-hidden group">
                 <div className="relative z-10">
-                    <div className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">Workouts / Week</div>
-                    <div className="text-3xl font-black text-foreground">{stats.weekCount}</div>
+                    <div className="text-xs font-bold uppercase tracking-widest text-primary mb-1">Workouts / Week</div>
+                    <div className="text-3xl font-bold text-white">{stats.weekCount}</div>
                 </div>
                 <Trophy className="absolute -bottom-2 -right-2 w-16 h-16 text-primary/10 group-hover:scale-110 transition-transform" />
             </div>
-            <div className="p-5 rounded-3xl bg-gradient-to-br from-secondary/20 to-orange-500/20 border border-secondary/20 shadow-sm relative overflow-hidden group">
+            <div className="p-5 rounded-3xl bg-[#1A1A1A] border border-white/5 shadow-card relative overflow-hidden group">
                 <div className="relative z-10">
-                    <div className="text-[10px] font-black uppercase tracking-widest text-secondary mb-1">Calories Burned</div>
-                    <div className="text-3xl font-black text-foreground">{stats.calories}</div>
+                    <div className="text-xs font-bold uppercase tracking-widest text-orange-400 mb-1">Calories Burned</div>
+                    <div className="text-3xl font-bold text-white">{stats.calories}</div>
                 </div>
-                <Zap className="absolute -bottom-2 -right-2 w-16 h-16 text-secondary/10 group-hover:scale-110 transition-transform" />
+                <Zap className="absolute -bottom-2 -right-2 w-16 h-16 text-orange-400/10 group-hover:scale-110 transition-transform" />
             </div>
         </div>
     );
@@ -77,24 +75,24 @@ export default function HistoryPage() {
                     <motion.div
                         key={workout.id}
                         layout
-                        className="p-5 rounded-[2rem] bg-surface border border-glass-border shadow-sm overflow-hidden"
+                        className="p-5 rounded-3xl bg-[#1A1A1A] border border-white/5 shadow-card overflow-hidden"
                     >
                         <div
                             className="flex justify-between items-center cursor-pointer"
                             onClick={() => setExpandedItem(expandedItem === workout.id ? null : workout.id)}
                         >
                             <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-2xl bg-surface-highlight flex items-center justify-center text-primary shadow-inner">
+                                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
                                     <Activity className="w-6 h-6" />
                                 </div>
                                 <div>
-                                    <div className="font-black text-foreground">{workout.type}</div>
-                                    <div className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">
+                                    <div className="font-bold text-white">{workout.type}</div>
+                                    <div className="text-xs text-muted font-medium">
                                         {new Date(workout.date).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })} • {formatDuration(workout.duration)} • {workout.calories || 0} kcal
                                     </div>
                                 </div>
                             </div>
-                            {expandedItem === workout.id ? <ChevronUp className="text-muted-foreground w-5 h-5" /> : <ChevronDown className="text-muted-foreground w-5 h-5" />}
+                            {expandedItem === workout.id ? <ChevronUp className="text-muted w-5 h-5" /> : <ChevronDown className="text-muted w-5 h-5" />}
                         </div>
 
                         <AnimatePresence>
@@ -103,31 +101,31 @@ export default function HistoryPage() {
                                     initial={{ height: 0, opacity: 0 }}
                                     animate={{ height: 'auto', opacity: 1 }}
                                     exit={{ height: 0, opacity: 0 }}
-                                    className="pt-6 mt-4 border-t border-glass-border space-y-4"
+                                    className="pt-6 mt-4 border-t border-white/5 space-y-4"
                                 >
                                     <div className="grid grid-cols-2 gap-4 mb-4">
-                                        <div className="p-3 rounded-2xl bg-surface-highlight border border-glass-border">
-                                            <div className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Total Reps</div>
-                                            <div className="text-xl font-black text-foreground">{workout.totalReps || 0}</div>
+                                        <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/5">
+                                            <div className="text-xs font-bold text-muted uppercase mb-1">Total Reps</div>
+                                            <div className="text-xl font-bold text-white">{workout.totalReps || 0}</div>
                                         </div>
-                                        <div className="p-3 rounded-2xl bg-surface-highlight border border-glass-border">
-                                            <div className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Avg Weight</div>
-                                            <div className="text-xl font-black text-foreground">
+                                        <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/5">
+                                            <div className="text-xs font-bold text-muted uppercase mb-1">Avg Weight</div>
+                                            <div className="text-xl font-bold text-white">
                                                 {workout.sets ? Math.round(workout.sets.reduce((acc: any, s: any) => acc + (parseFloat(s.weight) || 0), 0) / workout.sets.length) : 0}kg
                                             </div>
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <div className="text-[10px] font-bold text-muted-foreground uppercase px-2 mb-2">Set Breakdown</div>
+                                        <div className="text-xs font-bold text-muted uppercase px-2 mb-2">Set Breakdown</div>
                                         {workout.sets?.map((set: any, idx: number) => (
-                                            <div key={idx} className="flex justify-between items-center px-4 py-2 rounded-xl bg-surface-highlight/50">
-                                                <div className="text-xs font-bold text-foreground">Set {idx + 1}</div>
+                                            <div key={idx} className="flex justify-between items-center px-4 py-2 rounded-xl bg-white/[0.03]">
+                                                <div className="text-xs font-bold text-white">Set {idx + 1}</div>
                                                 <div className="flex gap-6">
-                                                    <div className="text-xs text-muted-foreground">
-                                                        <span className="text-foreground font-black">{set.weight}kg</span> Weight
+                                                    <div className="text-xs text-muted">
+                                                        <span className="text-white font-bold">{set.weight}kg</span> Weight
                                                     </div>
-                                                    <div className="text-xs text-muted-foreground">
-                                                        <span className="text-foreground font-black">{set.reps}</span> Reps
+                                                    <div className="text-xs text-muted">
+                                                        <span className="text-white font-bold">{set.reps}</span> Reps
                                                     </div>
                                                 </div>
                                             </div>
@@ -144,15 +142,14 @@ export default function HistoryPage() {
 
     const renderMetrics = () => (
         <div className="space-y-6">
-            {/* BMI Graph Placeholder */}
             {bmiHistory.length > 1 && (
-                <div className="p-6 rounded-[2.5rem] bg-surface border border-glass-border shadow-sm">
+                <div className="p-6 rounded-3xl bg-[#1A1A1A] border border-white/5 shadow-card">
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-2">
                             <BarChart3 className="w-4 h-4 text-primary" />
-                            <span className="text-xs font-black uppercase tracking-widest text-muted-foreground">BMI Trend</span>
+                            <span className="text-xs font-bold uppercase tracking-widest text-muted">BMI Trend</span>
                         </div>
-                        <div className="text-[10px] font-bold text-primary bg-primary/10 px-2 py-1 rounded-lg">Last {bmiHistory.length} logs</div>
+                        <div className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">Last {bmiHistory.length} logs</div>
                     </div>
                     <div className="h-24 w-full flex items-end gap-2 px-1">
                         {bmiHistory.slice().reverse().slice(-7).map((h, i) => (
@@ -162,7 +159,7 @@ export default function HistoryPage() {
                                     animate={{ height: `${(h.value / 40) * 100}%` }}
                                     className="w-full bg-gradient-to-t from-primary/40 to-primary rounded-t-lg min-h-[4px]"
                                 />
-                                <span className="text-[8px] font-bold text-muted-foreground">{h.value}</span>
+                                <span className="text-[8px] font-bold text-muted">{h.value}</span>
                             </div>
                         ))}
                     </div>
@@ -170,45 +167,45 @@ export default function HistoryPage() {
             )}
 
             <div className="space-y-4">
-                <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground px-1">Recent Logs</h3>
+                <h3 className="text-xs font-bold uppercase tracking-widest text-muted px-1">Recent Logs</h3>
                 {bmiHistory.length === 0 && tdeeHistory.length === 0 ? (
                     <EmptyState icon={Ruler} label="No metrics tracked" />
                 ) : (
                     <>
                         {bmiHistory.map(h => (
-                            <div key={h.id} className="p-5 rounded-3xl bg-surface border border-glass-border shadow-sm flex justify-between items-center">
+                            <div key={h.id} className="p-5 rounded-3xl bg-[#1A1A1A] border border-white/5 shadow-card flex justify-between items-center">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500">
+                                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400">
                                         <Ruler className="w-5 h-5" />
                                     </div>
                                     <div>
-                                        <div className="font-black text-foreground">BMI: {h.value}</div>
-                                        <div className="text-[10px] text-muted-foreground font-bold uppercase">{new Date(h.date).toLocaleDateString()} • {h.weight}kg</div>
+                                        <div className="font-bold text-white">BMI: {h.value}</div>
+                                        <div className="text-xs text-muted font-medium">{new Date(h.date).toLocaleDateString()} • {h.weight}kg</div>
                                     </div>
                                 </div>
-                                <div className="text-xs font-black text-blue-500 bg-blue-500/10 px-3 py-1 rounded-full">{h.category}</div>
+                                <div className="text-xs font-bold text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full">{h.category}</div>
                             </div>
                         ))}
                         {tdeeHistory.map(h => (
-                            <div key={h.id} className="p-5 rounded-[2rem] bg-surface border border-glass-border shadow-sm space-y-4">
+                            <div key={h.id} className="p-5 rounded-3xl bg-[#1A1A1A] border border-white/5 shadow-card space-y-4">
                                 <div className="flex justify-between items-center">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500">
+                                        <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400">
                                             <Activity className="w-5 h-5" />
                                         </div>
                                         <div>
-                                            <div className="font-black text-foreground">TDEE: {h.maintenance} kcal</div>
-                                            <div className="text-[10px] text-muted-foreground font-bold uppercase">{new Date(h.date).toLocaleDateString()} • {h.activity}</div>
+                                            <div className="font-bold text-white">TDEE: {h.maintenance} kcal</div>
+                                            <div className="text-xs text-muted font-medium">{new Date(h.date).toLocaleDateString()} • {h.activity}</div>
                                         </div>
                                     </div>
-                                    <div className="text-[10px] font-black text-orange-500 uppercase tracking-widest bg-orange-500/10 px-2 py-1 rounded">Daily Goal</div>
+                                    <div className="text-xs font-bold text-orange-400 uppercase tracking-widest bg-orange-500/10 px-3 py-1 rounded-full">Daily Goal</div>
                                 </div>
                                 <div className="grid grid-cols-2 gap-2">
-                                    <div className="text-[10px] bg-surface-highlight border border-glass-border p-2 rounded-xl text-center">
-                                        <span className="text-primary font-black block">{h.fatLoss}</span> Fat Loss
+                                    <div className="text-xs bg-white/[0.03] border border-white/5 p-2 rounded-xl text-center">
+                                        <span className="text-primary font-bold block">{h.fatLoss}</span> Fat Loss
                                     </div>
-                                    <div className="text-[10px] bg-surface-highlight border border-glass-border p-2 rounded-xl text-center">
-                                        <span className="text-secondary font-black block">{h.muscleGain}</span> Muscle Gain
+                                    <div className="text-xs bg-white/[0.03] border border-white/5 p-2 rounded-xl text-center">
+                                        <span className="text-white font-bold block">{h.muscleGain}</span> Muscle Gain
                                     </div>
                                 </div>
                             </div>
@@ -225,20 +222,20 @@ export default function HistoryPage() {
                 <EmptyState icon={Apple} label="No diets generated" />
             ) : (
                 dietHistory.map((diet) => (
-                    <div key={diet.id} className="p-6 rounded-[2rem] bg-surface border border-glass-border shadow-sm">
+                    <div key={diet.id} className="p-6 rounded-3xl bg-[#1A1A1A] border border-white/5 shadow-card">
                         <div className="flex justify-between items-start mb-4">
                             <div>
-                                <h4 className="font-black text-foreground">{diet.type}</h4>
-                                <p className="text-[10px] text-muted-foreground font-bold uppercase">{new Date(diet.date).toLocaleDateString()}</p>
+                                <h4 className="font-bold text-white">{diet.type}</h4>
+                                <p className="text-xs text-muted font-medium">{new Date(diet.date).toLocaleDateString()}</p>
                             </div>
-                            <Apple className="w-5 h-5 text-accent" />
+                            <Apple className="w-5 h-5 text-primary" />
                         </div>
-                        <p className="text-sm font-medium text-foreground/80 leading-relaxed mb-4">
+                        <p className="text-sm font-medium text-white/80 leading-relaxed mb-4">
                             {diet.title}
                         </p>
                         <div className="flex flex-wrap gap-2">
                             {diet.meals.slice(0, 3).map((m: string, i: number) => (
-                                <span key={i} className="text-[10px] font-bold bg-surface-highlight border border-glass-border px-3 py-1 rounded-full text-muted-foreground">
+                                <span key={i} className="text-xs font-bold bg-white/[0.03] border border-white/5 px-3 py-1 rounded-full text-muted">
                                     {m.split(' ')[0]}...
                                 </span>
                             ))}
@@ -252,23 +249,23 @@ export default function HistoryPage() {
     return (
         <div className="min-h-screen px-6 pt-12 pb-32 bg-background transition-colors duration-300">
             <header className="mb-8">
-                <h1 className="text-4xl font-black text-foreground tracking-tighter mb-2 italic">History</h1>
-                <p className="text-muted-foreground font-medium text-sm">Review your progress & past efforts</p>
+                <h1 className="text-4xl font-bold text-white tracking-tight mb-2">History</h1>
+                <p className="text-muted font-medium text-sm">Review your progress & past efforts</p>
             </header>
 
             {renderSummary()}
 
             {/* Tab Navigation */}
-            <div className="flex bg-surface-highlight border border-glass-border rounded-[2rem] p-1.5 mb-8">
+            <div className="flex bg-[#1A1A1A] border border-white/5 rounded-2xl p-1.5 mb-8">
                 {(['Workouts', 'Metrics', 'Diet'] as HistoryTab[]).map((tab) => (
                     <button
                         key={tab}
                         onClick={() => setActiveTab(tab)}
                         className={cn(
-                            "flex-1 py-3 px-2 rounded-[1.5rem] text-xs font-black uppercase tracking-widest transition-all",
+                            "flex-1 py-3 px-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-300",
                             activeTab === tab
-                                ? "bg-foreground text-background shadow-lg scale-[1.02]"
-                                : "text-muted-foreground hover:text-foreground"
+                                ? "bg-primary text-black shadow-[0_0_15px_rgba(198,255,0,0.2)]"
+                                : "text-muted hover:text-white"
                         )}
                     >
                         {tab}
@@ -297,7 +294,7 @@ function EmptyState({ icon: Icon, label }: { icon: any, label: string }) {
     return (
         <div className="flex flex-col items-center justify-center py-20 opacity-30">
             <Icon className="w-16 h-16 mb-4" />
-            <p className="text-sm font-black uppercase tracking-[0.2em]">{label}</p>
+            <p className="text-sm font-bold uppercase tracking-widest">{label}</p>
         </div>
     );
 }

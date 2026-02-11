@@ -92,22 +92,22 @@ export function TDEECalculator() {
     const isFormValid = gender && age && height && weight && activity;
 
     return (
-        <div className="w-full max-w-md mx-auto space-y-8 pb-12">
-            <div className="space-y-6">
+        <div className="w-full max-w-md mx-auto space-y-10 pb-12">
+            <div className="space-y-8">
                 {/* Basic Inputs */}
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 rounded-3xl bg-surface border border-glass-border shadow-sm">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground block mb-2">Gender</label>
-                        <div className="flex bg-surface-highlight rounded-2xl p-1 gap-1">
+                <div className="grid grid-cols-2 gap-6">
+                    <div className="p-6 rounded-[2.5rem] bg-surface-highlight border border-white/5 shadow-2xl group">
+                        <label className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 block mb-3 italic">Gender Sector</label>
+                        <div className="flex bg-black rounded-2xl p-1 gap-1 border border-white/5">
                             {["male", "female"].map((g) => (
                                 <button
                                     key={g}
                                     onClick={() => setGender(g)}
                                     className={cn(
-                                        "flex-1 py-2 rounded-xl text-xs font-bold transition-all capitalize",
+                                        "flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300 italic",
                                         gender === g
-                                            ? "bg-primary text-white shadow-md shadow-primary/20"
-                                            : "text-muted-foreground hover:bg-surface"
+                                            ? "bg-primary text-black shadow-glow"
+                                            : "text-zinc-600 hover:bg-white/5"
                                     )}
                                 >
                                     {g}
@@ -115,66 +115,81 @@ export function TDEECalculator() {
                             ))}
                         </div>
                     </div>
-                    <div className="p-4 rounded-3xl bg-surface border border-glass-border shadow-sm focus-within:ring-2 ring-primary/20 transition-all">
-                        <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2">
-                            <Calendar className="w-3 h-3 text-accent" /> Age
+                    <div className="p-6 rounded-[2.5rem] bg-surface-highlight border border-white/5 shadow-2xl focus-within:border-primary/40 transition-all duration-500">
+                        <label className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 mb-3 italic">
+                            <Calendar className="w-4 h-4 text-primary" /> Service Age
                         </label>
                         <input
                             type="number"
                             value={age}
                             onChange={(e) => setAge(e.target.value)}
-                            className="w-full bg-transparent border-none text-2xl font-black text-foreground placeholder-muted-foreground/20 focus:ring-0 p-0"
+                            className="w-full bg-transparent border-none text-2xl font-display font-bold text-white placeholder-zinc-800 focus:ring-0 p-0 italic"
                             placeholder="25"
                         />
                     </div>
-                    <div className="p-4 rounded-3xl bg-surface border border-glass-border shadow-sm focus-within:ring-2 ring-primary/20 transition-all">
-                        <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2">
-                            <Ruler className="w-3 h-3 text-primary" /> Height (cm)
+                    <div className="p-6 rounded-[2.5rem] bg-surface-highlight border border-white/5 shadow-2xl focus-within:border-primary/40 transition-all duration-500">
+                        <label className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 mb-3 italic">
+                            <Ruler className="w-4 h-4 text-primary" /> Elevation (cm)
                         </label>
                         <input
                             type="number"
                             value={height}
                             onChange={(e) => setHeight(e.target.value)}
-                            className="w-full bg-transparent border-none text-2xl font-black text-foreground placeholder-muted-foreground/20 focus:ring-0 p-0"
+                            className="w-full bg-transparent border-none text-2xl font-display font-bold text-white placeholder-zinc-800 focus:ring-0 p-0 italic"
                             placeholder="175"
                         />
                     </div>
-                    <div className="p-4 rounded-3xl bg-surface border border-glass-border shadow-sm focus-within:ring-2 ring-primary/20 transition-all">
-                        <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2">
-                            <Weight className="w-3 h-3 text-secondary" /> Weight (kg)
+                    <div className="p-6 rounded-[2.5rem] bg-surface-highlight border border-white/5 shadow-2xl focus-within:border-primary/40 transition-all duration-500">
+                        <label className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 mb-3 italic">
+                            <Weight className="w-4 h-4 text-primary" /> Mass (kg)
                         </label>
                         <input
                             type="number"
                             value={weight}
                             onChange={(e) => setWeight(e.target.value)}
-                            className="w-full bg-transparent border-none text-2xl font-black text-foreground placeholder-muted-foreground/20 focus:ring-0 p-0"
+                            className="w-full bg-transparent border-none text-2xl font-display font-bold text-white placeholder-zinc-800 focus:ring-0 p-0 italic"
                             placeholder="75"
                         />
                     </div>
                 </div>
 
                 {/* Activity Level */}
-                <div className="space-y-3">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-1">Activity Level</label>
-                    <div className="grid gap-2">
+                <div className="space-y-4">
+                    <div className="flex items-center gap-3 px-1">
+                        <div className="w-1 h-3 bg-zinc-800 rounded-full" />
+                        <label className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 italic">Operational Frequency</label>
+                    </div>
+                    <div className="grid gap-3">
                         {ACTIVITY_LEVELS.map((level) => (
                             <button
                                 key={level.id}
                                 onClick={() => setActivity(level.id)}
                                 className={cn(
-                                    "p-4 rounded-3xl border text-left transition-all flex items-center justify-between",
+                                    "p-6 rounded-[2.5rem] border transition-all duration-500 flex items-center justify-between group",
                                     activity === level.id
-                                        ? "bg-primary/5 border-primary shadow-sm"
-                                        : "bg-surface border-glass-border hover:border-primary/30"
+                                        ? "bg-primary/5 border-primary/40 shadow-glow"
+                                        : "bg-surface-highlight border-white/5 hover:border-primary/30"
                                 )}
                             >
-                                <div>
-                                    <div className={cn("text-sm font-black", activity === level.id ? "text-primary" : "text-foreground")}>
-                                        {level.label}
+                                <div className="flex items-center gap-5">
+                                    <div className={cn(
+                                        "w-12 h-12 rounded-2xl bg-black border flex items-center justify-center transition-all duration-500",
+                                        activity === level.id ? "border-primary/40 text-primary" : "border-white/5 text-zinc-700"
+                                    )}>
+                                        <Activity className="w-6 h-6" />
                                     </div>
-                                    <div className="text-[10px] text-muted-foreground font-medium">{level.desc}</div>
+                                    <div className="text-left">
+                                        <div className={cn("text-lg font-display font-bold uppercase italic leading-none mb-1 transition-colors", activity === level.id ? "text-primary" : "text-white")}>
+                                            {level.label}
+                                        </div>
+                                        <div className="text-[9px] text-zinc-600 font-black uppercase tracking-widest">{level.desc}</div>
+                                    </div>
                                 </div>
-                                {activity === level.id && <CheckCircle2 className="w-5 h-5 text-primary" />}
+                                {activity === level.id && (
+                                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-glow">
+                                        <CheckCircle2 className="w-5 h-5 text-black" />
+                                    </div>
+                                )}
                             </button>
                         ))}
                     </div>
@@ -184,98 +199,73 @@ export function TDEECalculator() {
                     onClick={calculateTDEE}
                     disabled={!isFormValid || isCalculating}
                     className={cn(
-                        "w-full py-5 rounded-2xl font-black text-white uppercase tracking-tighter text-xl shadow-xl transition-all flex items-center justify-center gap-3",
+                        "w-full h-18 rounded-[2.5rem] font-black text-black uppercase tracking-[0.5em] text-sm shadow-glow transition-all duration-500 flex items-center justify-center gap-4 italic",
                         isFormValid
-                            ? "bg-gradient-to-r from-primary via-accent to-secondary shadow-primary/20 hover:shadow-primary/40 active:scale-95"
-                            : "bg-surface-highlight text-muted-foreground opacity-50 cursor-not-allowed"
+                            ? "bg-primary active:scale-95 hover:scale-[1.02]"
+                            : "bg-zinc-900 text-zinc-700 opacity-50 cursor-not-allowed"
                     )}
                 >
                     {isCalculating ? (
                         <>
                             <Loader2 className="w-6 h-6 animate-spin" />
-                            <span>Calculating...</span>
+                            <span>Processing Intel...</span>
                         </>
                     ) : (
                         <>
-                            <span>Calculate Energy</span>
+                            <span>Run Energy Scan</span>
                             <Activity className="w-6 h-6" />
                         </>
                     )}
                 </button>
             </div>
 
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
                 {tdeeResults && !isCalculating && (
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="space-y-6"
+                        className="space-y-8"
                     >
-                        <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground px-1">Your Daily Calorie Targets</h2>
-
-                        <div className="grid gap-4">
-                            {/* Maintenance */}
-                            <div className="p-6 rounded-[2rem] bg-surface border border-glass-border shadow-sm flex items-center justify-between relative overflow-hidden group">
-                                <div className="flex items-center gap-4 relative z-10">
-                                    <div className="w-14 h-14 rounded-2xl bg-orange-500/10 flex items-center justify-center text-orange-500">
-                                        <Activity className="w-7 h-7" />
-                                    </div>
-                                    <div>
-                                        <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Maintenance</div>
-                                        <div className="text-3xl font-black text-foreground tracking-tighter">
-                                            {tdeeResults.maintenance} <span className="text-sm text-muted-foreground font-bold">kcal</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="text-[10px] font-black uppercase text-orange-500 bg-orange-500/10 px-3 py-1 rounded-full relative z-10">Stable</div>
-                                <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:scale-110 transition-transform">
-                                    <Activity className="w-24 h-24" />
-                                </div>
-                            </div>
-
-                            {/* Fat Loss */}
-                            <div className="p-6 rounded-[2rem] bg-surface border border-glass-border shadow-sm flex items-center justify-between relative overflow-hidden group">
-                                <div className="flex items-center gap-4 relative z-10">
-                                    <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-                                        <ArrowDown className="w-7 h-7" />
-                                    </div>
-                                    <div>
-                                        <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Fat Loss</div>
-                                        <div className="text-3xl font-black text-foreground tracking-tighter">
-                                            {tdeeResults.fatLoss} <span className="text-sm text-muted-foreground font-bold">kcal</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="text-[10px] font-black uppercase text-primary bg-primary/10 px-3 py-1 rounded-full relative z-10">-500 kcal</div>
-                                <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:scale-110 transition-transform">
-                                    <ArrowDown className="w-24 h-24" />
-                                </div>
-                            </div>
-
-                            {/* Muscle Gain */}
-                            <div className="p-6 rounded-[2rem] bg-surface border border-glass-border shadow-sm flex items-center justify-between relative overflow-hidden group">
-                                <div className="flex items-center gap-4 relative z-10">
-                                    <div className="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary">
-                                        <ArrowUp className="w-7 h-7" />
-                                    </div>
-                                    <div>
-                                        <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Muscle Gain</div>
-                                        <div className="text-3xl font-black text-foreground tracking-tighter">
-                                            {tdeeResults.muscleGain} <span className="text-sm text-muted-foreground font-bold">kcal</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="text-[10px] font-black uppercase text-secondary bg-secondary/10 px-3 py-1 rounded-full relative z-10">+500 kcal</div>
-                                <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:scale-110 transition-transform">
-                                    <ArrowUp className="w-24 h-24" />
-                                </div>
-                            </div>
+                        <div className="flex items-center gap-3 px-1">
+                            <div className="w-1.5 h-6 bg-primary rounded-full shadow-glow" />
+                            <h2 className="text-[11px] font-black uppercase tracking-[0.4em] text-zinc-500 italic">Target Parameters</h2>
                         </div>
 
-                        <div className="p-5 rounded-3xl bg-surface-highlight border border-glass-border flex items-start gap-3">
-                            <Info className="w-5 h-5 text-muted-foreground shrink-0 mt-0.5" />
-                            <p className="text-[11px] text-muted-foreground font-medium leading-relaxed">
-                                These results are estimates based on the Mifflin-St Jeor equation. For the best results, track your intake and adjust based on your body's response over 2-3 weeks.
+                        <div className="grid gap-6">
+                            {[
+                                { id: 'maint', label: 'Baseline', value: tdeeResults.maintenance, sub: 'Daily Maintenance', color: 'text-zinc-400', icon: Activity, badge: 'STABLE' },
+                                { id: 'loss', label: 'Aggressive', value: tdeeResults.fatLoss, sub: 'Fat Loss Protocol', color: 'text-primary', icon: ArrowDown, badge: '-500 KCAL' },
+                                { id: 'gain', label: 'Hypertrophy', value: tdeeResults.muscleGain, sub: 'Muscle Gain Protocol', color: 'text-emerald-500', icon: ArrowUp, badge: '+500 KCAL' }
+                            ].map((res) => (
+                                <div key={res.id} className="p-8 rounded-[3rem] bg-surface-highlight border border-white/5 shadow-2xl flex items-center justify-between relative overflow-hidden group">
+                                    <div className="flex items-center gap-6 relative z-10">
+                                        <div className={cn("w-16 h-16 rounded-[2rem] bg-black border border-white/5 flex items-center justify-center group-hover:scale-110 group-hover:border-primary/20 transition-all duration-500 shadow-xl", res.color)}>
+                                            <res.icon className="w-8 h-8" />
+                                        </div>
+                                        <div>
+                                            <div className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-2 italic">{res.label}</div>
+                                            <div className="text-4xl font-display font-bold text-white tracking-tighter italic leading-none">
+                                                {res.value} <span className="text-xs text-zinc-700 uppercase ml-1">KCAL / DAY</span>
+                                            </div>
+                                            <div className="text-[9px] font-black text-zinc-700 uppercase tracking-[0.2em] mt-3 italic">{res.sub}</div>
+                                        </div>
+                                    </div>
+                                    <div className={cn("text-[9px] font-black uppercase tracking-[0.2em] px-4 py-1.5 rounded-full border border-white/5 relative z-10 italic transition-all duration-500 group-hover:scale-110", res.color === 'text-primary' ? 'bg-primary/10 border-primary/20' : 'bg-white/5')}>
+                                        {res.badge}
+                                    </div>
+                                    <div className="absolute -right-6 -bottom-6 opacity-[0.02] group-hover:opacity-[0.05] group-hover:scale-125 transition-all duration-1000">
+                                        <res.icon className="w-40 h-40 text-white" />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="p-8 rounded-[3rem] bg-zinc-950/50 border border-white/5 flex items-start gap-4 shadow-xl">
+                            <div className="w-10 h-10 rounded-2xl bg-white/5 flex items-center justify-center shrink-0">
+                                <Info className="w-5 h-5 text-zinc-600" />
+                            </div>
+                            <p className="text-[11px] text-zinc-500 font-black uppercase tracking-[0.1em] leading-relaxed italic">
+                                Results based on Mifflin-St Jeor protocols. Track biometric response for 14-21 combat rotations and adjust accordingly.
                             </p>
                         </div>
 
@@ -283,10 +273,10 @@ export function TDEECalculator() {
                             onClick={() => {
                                 setGender(""); setAge(""); setHeight(""); setWeight(""); setActivity(""); setTdeeResults(null); setSavedTDEE(null);
                             }}
-                            className="w-full py-4 rounded-2xl bg-surface border border-glass-border text-xs font-bold text-muted-foreground flex items-center justify-center gap-2 active:scale-95 transition-all"
+                            className="w-full h-14 rounded-2xl bg-black border border-white/5 text-[10px] font-black text-zinc-600 uppercase tracking-[0.3em] flex items-center justify-center gap-3 hover:bg-white/5 hover:text-white active:scale-95 transition-all duration-500 italic"
                         >
-                            <RefreshCw className="w-3 h-3" />
-                            <span>Reset Calculator</span>
+                            <RefreshCw className="w-4 h-4" />
+                            <span>Wipe Session Intel</span>
                         </button>
                     </motion.div>
                 )}

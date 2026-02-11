@@ -50,12 +50,15 @@ export function Onboarding() {
     if (!show) return null;
 
     return (
-        <div className="fixed inset-0 z-[200] bg-black flex items-center justify-center p-6 bg-gradient-to-b from-black via-gray-900 to-black">
+        <div className="fixed inset-0 z-[200] bg-[#0E0E0E] flex items-center justify-center p-6">
+            {/* Ambient glow */}
+            <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/10 blur-[150px] rounded-full pointer-events-none" />
+
             <div className="w-full max-w-md space-y-8 relative">
-                {/* Skip Button */}
+                {/* Skip */}
                 <button
                     onClick={skip}
-                    className="absolute -top-12 right-0 text-gray-500 text-sm font-medium hover:text-white"
+                    className="absolute -top-12 right-0 text-muted text-sm font-medium hover:text-white transition-colors"
                 >
                     Skip
                 </button>
@@ -70,8 +73,8 @@ export function Onboarding() {
                             className="space-y-6"
                         >
                             <div className="space-y-2">
-                                <h1 className="text-4xl font-extrabold text-white">What's your goal?</h1>
-                                <p className="text-gray-400">We'll tailor your training experience.</p>
+                                <h1 className="text-4xl font-bold text-white">What's your goal?</h1>
+                                <p className="text-muted">We'll tailor your training experience.</p>
                             </div>
 
                             <div className="grid grid-cols-1 gap-3">
@@ -84,17 +87,17 @@ export function Onboarding() {
                                     <button
                                         key={item.id}
                                         onClick={() => setLocalPrefs({ ...localPrefs, goal: item.id })}
-                                        className={`p-4 rounded-2xl border flex items-center gap-4 transition-all ${localPrefs.goal === item.id
-                                            ? "bg-primary/20 border-primary text-primary"
-                                            : "bg-white/5 border-white/10 text-white"
+                                        className={`p-4 rounded-2xl border flex items-center gap-4 transition-all duration-300 ${localPrefs.goal === item.id
+                                            ? "bg-primary/10 border-primary text-primary"
+                                            : "bg-[#1A1A1A] border-white/5 text-white hover:border-white/20"
                                             }`}
                                     >
-                                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${localPrefs.goal === item.id ? "bg-primary text-black" : "bg-white/10"}`}>
+                                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${localPrefs.goal === item.id ? "bg-primary text-black" : "bg-white/5"}`}>
                                             {item.icon}
                                         </div>
                                         <div className="text-left">
                                             <p className="font-bold">{item.label}</p>
-                                            <p className="text-xs opacity-60">{item.desc}</p>
+                                            <p className="text-xs text-muted">{item.desc}</p>
                                         </div>
                                         {localPrefs.goal === item.id && <Check className="w-5 h-5 ml-auto" />}
                                     </button>
@@ -112,8 +115,8 @@ export function Onboarding() {
                             className="space-y-6"
                         >
                             <div className="space-y-2">
-                                <h1 className="text-4xl font-extrabold text-white">Your Level</h1>
-                                <p className="text-gray-400">How would you describe your experience?</p>
+                                <h1 className="text-4xl font-bold text-white">Your Level</h1>
+                                <p className="text-muted">How would you describe your experience?</p>
                             </div>
 
                             <div className="grid grid-cols-1 gap-3">
@@ -125,13 +128,13 @@ export function Onboarding() {
                                     <button
                                         key={item.id}
                                         onClick={() => setLocalPrefs({ ...localPrefs, experience: item.id })}
-                                        className={`p-5 rounded-2xl border text-left transition-all ${localPrefs.experience === item.id
-                                            ? "bg-primary/20 border-primary text-primary"
-                                            : "bg-white/5 border-white/10 text-white"
+                                        className={`p-5 rounded-2xl border text-left transition-all duration-300 ${localPrefs.experience === item.id
+                                            ? "bg-primary/10 border-primary text-primary"
+                                            : "bg-[#1A1A1A] border-white/5 text-white hover:border-white/20"
                                             }`}
                                     >
                                         <p className="font-bold text-lg">{item.label}</p>
-                                        <p className="text-sm opacity-60">{item.desc}</p>
+                                        <p className="text-sm text-muted">{item.desc}</p>
                                     </button>
                                 ))}
                             </div>
@@ -147,8 +150,8 @@ export function Onboarding() {
                             className="space-y-6"
                         >
                             <div className="space-y-2">
-                                <h1 className="text-4xl font-extrabold text-white">Workout Frequency</h1>
-                                <p className="text-gray-400">How many days per week can you train?</p>
+                                <h1 className="text-4xl font-bold text-white">Workout Frequency</h1>
+                                <p className="text-muted">How many days per week can you train?</p>
                             </div>
 
                             <div className="grid grid-cols-4 gap-3">
@@ -156,13 +159,13 @@ export function Onboarding() {
                                     <button
                                         key={day}
                                         onClick={() => setLocalPrefs({ ...localPrefs, weeklyDays: day })}
-                                        className={`h-20 rounded-2xl border flex flex-col items-center justify-center transition-all ${localPrefs.weeklyDays === day
-                                            ? "bg-primary/20 border-primary text-primary"
-                                            : "bg-white/5 border-white/10 text-white"
+                                        className={`h-20 rounded-2xl border flex flex-col items-center justify-center transition-all duration-300 ${localPrefs.weeklyDays === day
+                                            ? "bg-primary/10 border-primary text-primary"
+                                            : "bg-[#1A1A1A] border-white/5 text-white hover:border-white/20"
                                             }`}
                                     >
                                         <p className="text-2xl font-bold">{day}</p>
-                                        <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Days</p>
+                                        <p className="text-[10px] font-bold uppercase tracking-widest text-muted">Days</p>
                                     </button>
                                 ))}
                             </div>
@@ -171,12 +174,14 @@ export function Onboarding() {
                 </AnimatePresence>
 
                 <div className="pt-8">
-                    <button
+                    <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.97 }}
                         onClick={nextStep}
-                        className="w-full py-5 rounded-2xl bg-primary text-black font-bold text-lg flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
+                        className="w-full py-5 rounded-full bg-primary text-black font-bold text-lg flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(198,255,0,0.25)] hover:shadow-[0_0_35px_rgba(198,255,0,0.4)] transition-shadow duration-500"
                     >
                         {step === 3 ? "Finish Setup" : "Continue"} <ChevronRight className="w-5 h-5" />
-                    </button>
+                    </motion.button>
 
                     <div className="flex justify-center gap-2 mt-6">
                         {[1, 2, 3].map((s) => (

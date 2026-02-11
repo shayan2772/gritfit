@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import {
     Ruler, Weight, User, Apple, CheckCircle2,
     XCircle, Info, Flame, Trophy, Quote,
-    ChevronDown, ChevronUp, RefreshCw
+    ChevronDown, ChevronUp, RefreshCw, Activity
 } from "lucide-react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
@@ -152,135 +152,142 @@ export function BMICalculator() {
         <div className="w-full max-w-md mx-auto pb-12">
             <div className="space-y-6">
                 {/* Input Section */}
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 rounded-3xl bg-surface border border-glass-border shadow-sm focus-within:ring-2 ring-primary/20 transition-all">
-                        <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2">
-                            <Ruler className="w-3 h-3 text-primary" /> Height (cm)
+                <div className="grid grid-cols-2 gap-6">
+                    <div className="p-6 rounded-[2.5rem] bg-surface-highlight border border-white/5 shadow-2xl focus-within:border-primary/40 transition-all duration-500 group">
+                        <label className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 mb-3 italic">
+                            <Ruler className="w-4 h-4 text-primary" /> Elevation
                         </label>
-                        <input
-                            type="number"
-                            value={height}
-                            onChange={(e) => setHeight(e.target.value)}
-                            className="w-full bg-transparent border-none text-2xl font-black text-foreground placeholder-muted-foreground/20 focus:ring-0 p-0"
-                            placeholder="175"
-                        />
+                        <div className="flex items-baseline gap-2">
+                            <input
+                                type="number"
+                                value={height}
+                                onChange={(e) => setHeight(e.target.value)}
+                                className="w-full bg-transparent border-none text-3xl font-display font-bold text-white placeholder-zinc-800 focus:ring-0 p-0 italic"
+                                placeholder="175"
+                            />
+                            <span className="text-[10px] font-black text-zinc-700 italic">CM</span>
+                        </div>
                     </div>
-                    <div className="p-4 rounded-3xl bg-surface border border-glass-border shadow-sm focus-within:ring-2 ring-primary/20 transition-all">
-                        <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2">
-                            <Weight className="w-3 h-3 text-secondary" /> Weight (kg)
+                    <div className="p-6 rounded-[2.5rem] bg-surface-highlight border border-white/5 shadow-2xl focus-within:border-primary/40 transition-all duration-500 group">
+                        <label className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 mb-3 italic">
+                            <Weight className="w-4 h-4 text-primary" /> Mass
                         </label>
-                        <input
-                            type="number"
-                            value={weight}
-                            onChange={(e) => setWeight(e.target.value)}
-                            className="w-full bg-transparent border-none text-2xl font-black text-foreground placeholder-muted-foreground/20 focus:ring-0 p-0"
-                            placeholder="75"
-                        />
+                        <div className="flex items-baseline gap-2">
+                            <input
+                                type="number"
+                                value={weight}
+                                onChange={(e) => setWeight(e.target.value)}
+                                className="w-full bg-transparent border-none text-3xl font-display font-bold text-white placeholder-zinc-800 focus:ring-0 p-0 italic"
+                                placeholder="75"
+                            />
+                            <span className="text-[10px] font-black text-zinc-700 italic">KG</span>
+                        </div>
                     </div>
-                    <div className="p-4 rounded-3xl bg-surface border border-glass-border shadow-sm focus-within:ring-2 ring-primary/20 transition-all">
-                        <label className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-2">
-                            <User className="w-3 h-3 text-accent" /> Age
+                    <div className="p-6 rounded-[2.5rem] bg-surface-highlight border border-white/5 shadow-2xl focus-within:border-primary/40 transition-all duration-500 group">
+                        <label className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 mb-3 italic">
+                            <User className="w-4 h-4 text-primary" /> Service Age
                         </label>
                         <input
                             type="number"
                             value={age}
                             onChange={(e) => setAge(e.target.value)}
-                            className="w-full bg-transparent border-none text-2xl font-black text-foreground placeholder-muted-foreground/20 focus:ring-0 p-0"
+                            className="w-full bg-transparent border-none text-3xl font-display font-bold text-white placeholder-zinc-800 focus:ring-0 p-0 italic"
                             placeholder="25"
                         />
                     </div>
-                    <div className="p-4 rounded-3xl bg-surface border border-glass-border shadow-sm">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground block mb-2">Gender</label>
+                    <div className="p-6 rounded-[2.5rem] bg-surface-highlight border border-white/5 shadow-2xl group">
+                        <label className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 block mb-3 italic">Gender Sector</label>
                         <select
                             value={gender}
                             onChange={(e) => setGender(e.target.value)}
-                            className="w-full bg-transparent border-none text-lg font-bold text-foreground focus:ring-0 p-0 appearance-none"
+                            className="w-full bg-transparent border-none text-xl font-display font-bold text-white focus:ring-0 p-0 appearance-none italic"
                         >
-                            <option value="" disabled>Select</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
+                            <option value="" disabled className="bg-black">SELECT</option>
+                            <option value="male" className="bg-black">MALE</option>
+                            <option value="female" className="bg-black">FEMALE</option>
                         </select>
                     </div>
                 </div>
 
                 <button
                     onClick={calculateBMI}
-                    className="w-full py-5 rounded-2xl bg-gradient-to-r from-primary via-accent to-secondary font-black text-white uppercase tracking-tighter text-xl shadow-xl shadow-primary/20 hover:shadow-primary/40 active:scale-95 transition-all"
+                    className="w-full py-6 rounded-[2.5rem] bg-primary font-black text-black uppercase tracking-[0.5em] text-sm shadow-glow hover:scale-[1.02] active:scale-95 transition-all duration-500 italic"
                 >
-                    Calculate Results
+                    Run Biometric Scan
                 </button>
 
                 {bmi && status && dietPlan && (
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="space-y-6"
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="space-y-10"
                     >
                         {/* Result Card */}
-                        <div className={cn("p-8 rounded-[2rem] border-2 text-center relative overflow-hidden", status.bg, status.border)}>
+                        <div className={cn("p-10 rounded-[3.5rem] border border-white/10 text-center relative overflow-hidden shadow-2xl bg-black", status.border)}>
+                            <div className="absolute inset-0 bg-primary/5 opacity-50" />
                             <div className="relative z-10">
-                                <div className="text-xs font-black uppercase tracking-[0.3em] text-muted-foreground mb-2">Your current Score</div>
-                                <div className="text-7xl font-black text-foreground tracking-tighter">{bmi}</div>
-                                <div className={cn("text-xl font-black mt-4 uppercase tracking-widest", status.color)}>
+                                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-4 italic">Index Score</div>
+                                <div className="text-8xl font-display font-bold text-white tracking-tighter italic leading-none">{bmi}</div>
+                                <div className={cn("text-2xl font-display font-bold mt-6 uppercase italic tracking-widest", status.color)}>
                                     {status.label}
                                 </div>
                             </div>
-                            <div className="absolute -bottom-4 -right-4 opacity-5">
-                                <Trophy className="w-32 h-32" />
+                            <div className="absolute -bottom-10 -right-10 opacity-[0.03] rotate-12">
+                                <Activity className="w-64 h-64 text-white" />
                             </div>
                         </div>
 
                         {/* Diet Plan Section */}
-                        <div className="space-y-4">
-                            <div className="flex items-center gap-3 px-2">
-                                <Apple className="w-5 h-5 text-primary" />
-                                <h3 className="text-sm font-black uppercase tracking-widest text-foreground">{dietPlan.title}</h3>
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-4 px-2">
+                                <div className="w-1.5 h-6 bg-primary rounded-full shadow-glow" />
+                                <h3 className="text-[11px] font-black uppercase tracking-[0.4em] text-zinc-500 italic">{dietPlan.title}</h3>
                             </div>
 
-                            <div className="space-y-3">
+                            <div className="space-y-4">
                                 {dietPlan.meals.map((meal, idx) => (
                                     <motion.div
                                         key={idx}
                                         initial={{ opacity: 0, x: -20 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: idx * 0.1 }}
-                                        className="p-5 rounded-3xl bg-surface border border-glass-border shadow-sm flex items-start gap-4"
+                                        className="p-6 rounded-[2.5rem] bg-surface-highlight border border-white/5 shadow-2xl flex items-center gap-6 group hover:border-primary/20 transition-all duration-500"
                                     >
-                                        <div className="w-12 h-12 rounded-2xl bg-surface-highlight flex items-center justify-center text-primary shadow-inner">
-                                            <meal.icon className="w-6 h-6" />
+                                        <div className="w-16 h-16 rounded-2xl bg-black border border-white/5 flex items-center justify-center text-primary group-hover:scale-110 transition-all duration-500">
+                                            <meal.icon className="w-8 h-8" />
                                         </div>
                                         <div className="flex-1">
-                                            <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">{meal.time}</div>
-                                            <div className="text-sm font-bold text-foreground leading-relaxed">{meal.food}</div>
+                                            <div className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-1 italic">{meal.time}</div>
+                                            <div className="text-lg font-display font-bold text-white uppercase italic leading-none tracking-tight">{meal.food}</div>
                                         </div>
                                     </motion.div>
                                 ))}
                             </div>
 
                             {/* DOs & DON'Ts */}
-                            <div className="grid grid-cols-2 gap-4 mt-6">
-                                <div className="p-5 rounded-3xl bg-green-500/5 border border-green-500/20">
-                                    <div className="flex items-center gap-2 mb-3 text-green-500">
-                                        <CheckCircle2 className="w-4 h-4" />
-                                        <span className="text-[10px] font-black uppercase">Guidelines</span>
+                            <div className="grid grid-cols-2 gap-6 mt-10">
+                                <div className="p-8 rounded-[3rem] bg-primary/5 border border-primary/10 shadow-xl">
+                                    <div className="flex items-center gap-3 mb-6 text-primary">
+                                        <CheckCircle2 className="w-5 h-5" />
+                                        <span className="text-[10px] font-black uppercase tracking-[0.3em] italic">Protocols</span>
                                     </div>
-                                    <ul className="space-y-2">
+                                    <ul className="space-y-4">
                                         {dietPlan.dos.map((item, i) => (
-                                            <li key={i} className="text-[11px] font-bold text-foreground/80 flex items-center gap-2">
-                                                <div className="w-1 h-1 rounded-full bg-green-500" /> {item}
+                                            <li key={i} className="text-[11px] font-black text-zinc-300 uppercase italic tracking-tight leading-tight flex items-start gap-3">
+                                                <div className="w-1 h-3 bg-primary rounded-full mt-0.5 shrink-0" /> {item}
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
-                                <div className="p-5 rounded-3xl bg-red-500/5 border border-red-500/20">
-                                    <div className="flex items-center gap-2 mb-3 text-red-500">
-                                        <XCircle className="w-4 h-4" />
-                                        <span className="text-[10px] font-black uppercase">Avoid</span>
+                                <div className="p-8 rounded-[3rem] bg-white/5 border border-white/10 shadow-xl">
+                                    <div className="flex items-center gap-3 mb-6 text-zinc-500">
+                                        <XCircle className="w-5 h-5" />
+                                        <span className="text-[10px] font-black uppercase tracking-[0.3em] italic">Restrictions</span>
                                     </div>
-                                    <ul className="space-y-2">
+                                    <ul className="space-y-4">
                                         {dietPlan.donts.map((item, i) => (
-                                            <li key={i} className="text-[11px] font-bold text-foreground/80 flex items-center gap-2">
-                                                <div className="w-1 h-1 rounded-full bg-red-500" /> {item}
+                                            <li key={i} className="text-[11px] font-black text-zinc-500 uppercase italic tracking-tight leading-tight flex items-start gap-3">
+                                                <div className="w-1 h-3 bg-zinc-800 rounded-full mt-0.5 shrink-0" /> {item}
                                             </li>
                                         ))}
                                     </ul>
@@ -298,34 +305,34 @@ export function BMICalculator() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm"
+                        className="fixed inset-0 z-[100] flex items-center justify-center p-8 bg-black/80 backdrop-blur-xl"
                     >
                         <motion.div
-                            initial={{ scale: 0.9, y: 20 }}
+                            initial={{ scale: 0.9, y: 40 }}
                             animate={{ scale: 1, y: 0 }}
-                            className="w-full max-w-sm bg-surface-highlight border border-white/20 rounded-[2.5rem] p-10 text-center shadow-2xl relative overflow-hidden"
+                            className="w-full max-w-sm bg-black border border-white/10 rounded-[3.5rem] p-12 text-center shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden group"
                         >
-                            <div className="absolute top-0 right-0 p-8 opacity-5">
-                                <Quote className="w-24 h-24" />
+                            <div className="absolute top-0 right-0 p-8 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity duration-1000">
+                                <Quote className="w-32 h-32 text-white" />
                             </div>
 
-                            <div className="w-16 h-16 rounded-3xl bg-primary/10 flex items-center justify-center mx-auto mb-8">
-                                <Trophy className="w-8 h-8 text-primary" />
+                            <div className="w-20 h-20 rounded-[2.5rem] bg-primary flex items-center justify-center mx-auto mb-10 shadow-glow">
+                                <Trophy className="w-10 h-10 text-black" />
                             </div>
 
-                            <h4 className="text-2xl font-black text-foreground mb-4 leading-tight italic">
+                            <h4 className="text-3xl font-display font-bold text-white mb-6 italic leading-tight uppercase tracking-tight">
                                 "{currentQuote.text}"
                             </h4>
 
-                            <p className="text-primary font-black uppercase tracking-[0.2em] text-xs mb-10">
-                                — {currentQuote.author}
+                            <p className="text-primary font-black uppercase tracking-[0.4em] text-[10px] mb-12 italic">
+                                — OPERATIVE {currentQuote.author}
                             </p>
 
                             <button
                                 onClick={() => setShowMotivation(false)}
-                                className="w-full py-5 rounded-[2rem] bg-foreground text-background font-black text-lg shadow-xl shadow-black/20 hover:scale-[1.02] active:scale-95 transition-all"
+                                className="w-full py-6 rounded-[2.5rem] bg-white text-black font-black text-sm uppercase tracking-[0.4em] shadow-2xl hover:scale-[1.05] active:scale-95 transition-all duration-500 italic"
                             >
-                                Stay Consistent 💪
+                                Stay Focused
                             </button>
                         </motion.div>
                     </motion.div>

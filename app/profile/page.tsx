@@ -96,22 +96,23 @@ export default function ProfilePage() {
     }
 
     return (
-        <div className="min-h-screen px-6 pt-12 pb-32 bg-background transition-colors duration-300">
-            <header className="mb-10 flex items-center justify-between">
-                <div className="flex items-center gap-4">
+        <div className="min-h-screen px-6 pt-16 pb-40 bg-background transition-colors duration-500 max-w-lg mx-auto overflow-x-hidden">
+            <header className="mb-12 flex items-center justify-between relative">
+                <div className="absolute -top-10 -left-10 w-40 h-40 bg-primary/10 blur-[100px] -z-10" />
+                <div className="flex items-center gap-6">
                     <div className="relative group">
-                        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary via-accent to-secondary p-[3px] shadow-xl group-active:scale-95 transition-transform duration-200">
-                            <div className="w-full h-full rounded-full bg-surface-highlight flex items-center justify-center overflow-hidden relative">
+                        <div className="w-24 h-24 rounded-[2.5rem] bg-gradient-to-br from-primary via-primary/50 to-zinc-900 p-[2px] shadow-2xl group-active:scale-95 transition-all duration-300">
+                            <div className="w-full h-full rounded-[2.5rem] bg-black flex items-center justify-center overflow-hidden relative">
                                 {profile.image ? (
-                                    <img src={profile.image} alt="Profile" className="w-full h-full object-cover" />
+                                    <img src={profile.image} alt="Profile" className="w-full h-full object-cover brightness-75 group-hover:brightness-100 transition-all duration-500" />
                                 ) : (
-                                    <User className="w-8 h-8 text-muted-foreground/40" />
+                                    <User className="w-10 h-10 text-zinc-800" />
                                 )}
                                 <button
                                     onClick={() => fileInputRef.current?.click()}
-                                    className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity"
+                                    className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all duration-500 backdrop-blur-sm"
                                 >
-                                    <Camera className="w-6 h-6 text-white" />
+                                    <Camera className="w-8 h-8 text-white" />
                                 </button>
                             </div>
                         </div>
@@ -124,92 +125,92 @@ export default function ProfilePage() {
                         />
                     </div>
                     <div>
-                        <h1 className="text-3xl font-black tracking-tight text-foreground">
-                            {profile.fullName || "Your Profile"}
+                        <div className="flex items-center gap-2 mb-2">
+                            <div className="w-1 h-3 bg-primary rounded-full shadow-glow" />
+                            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary drop-shadow-md">Active Operative</p>
+                        </div>
+                        <h1 className="text-4xl font-display font-bold tracking-tight text-white uppercase italic leading-none">
+                            {profile.fullName || "Unidentified"}
                         </h1>
-                        <p className="text-muted-foreground text-sm font-medium">
-                            {workouts.length} Workouts Accomplished
+                        <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.2em] mt-2 italic">
+                            {workouts.length} Missions Accomplished
                         </p>
                     </div>
                 </div>
-
-                <button
-                    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                    className="p-3 rounded-2xl bg-surface border border-glass-border shadow-sm active:scale-90 transition-all"
-                >
-                    {resolvedTheme === 'dark' ? "🌙" : "☀️"}
-                </button>
             </header>
 
-            <div className="space-y-6">
+            <div className="space-y-10">
                 {/* Personal Information */}
-                <section className="space-y-4">
-                    <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground px-1">Personal Details</h2>
-                    <div className="grid gap-4">
-                        <div className="p-4 rounded-3xl bg-surface border border-glass-border shadow-sm focus-within:ring-2 ring-primary/20 transition-all">
-                            <div className="flex items-center gap-3 mb-2">
+                <section className="space-y-6">
+                    <div className="flex items-center gap-3 px-1">
+                        <div className="w-1.5 h-6 bg-zinc-800 rounded-full" />
+                        <h2 className="text-[11px] font-black uppercase tracking-[0.4em] text-zinc-500 italic">Personal Intel</h2>
+                    </div>
+                    <div className="grid gap-6">
+                        <div className="p-6 rounded-[2.5rem] bg-surface-highlight border border-white/5 shadow-2xl focus-within:border-primary/40 transition-all duration-500 group">
+                            <div className="flex items-center gap-3 mb-3">
                                 <User className="w-4 h-4 text-primary" />
-                                <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Full Name</label>
+                                <label className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 italic">Codename / Full Name</label>
                             </div>
                             <input
                                 type="text"
                                 value={profile.fullName}
                                 onChange={(e) => setProfile({ ...profile, fullName: e.target.value })}
-                                className="w-full bg-transparent border-none text-lg font-bold text-foreground placeholder-muted-foreground/30 focus:ring-0 p-0"
-                                placeholder="Enter full name"
+                                className="w-full bg-transparent border-none text-2xl font-display font-bold text-white placeholder-zinc-800 focus:ring-0 p-0 italic"
+                                placeholder="IDENTIFY YOURSELF"
                             />
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="p-4 rounded-3xl bg-surface border border-glass-border shadow-sm focus-within:ring-2 ring-primary/20 transition-all">
-                                <div className="flex items-center gap-3 mb-2">
-                                    <Phone className="w-4 h-4 text-secondary" />
-                                    <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Phone</label>
+                        <div className="grid grid-cols-2 gap-6">
+                            <div className="p-6 rounded-[2.5rem] bg-surface-highlight border border-white/5 shadow-2xl focus-within:border-primary/40 transition-all duration-500">
+                                <div className="flex items-center gap-3 mb-3">
+                                    <Phone className="w-4 h-4 text-primary" />
+                                    <label className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 italic">Phone</label>
                                 </div>
                                 <input
                                     type="tel"
                                     value={profile.phoneNumber}
                                     onChange={(e) => setProfile({ ...profile, phoneNumber: e.target.value })}
-                                    className="w-full bg-transparent border-none text-lg font-bold text-foreground placeholder-muted-foreground/30 focus:ring-0 p-0"
-                                    placeholder="Number"
+                                    className="w-full bg-transparent border-none text-xl font-display font-bold text-white placeholder-zinc-800 focus:ring-0 p-0 italic"
+                                    placeholder="###-###-####"
                                 />
                             </div>
-                            <div className="p-4 rounded-3xl bg-surface border border-glass-border shadow-sm focus-within:ring-2 ring-primary/20 transition-all">
-                                <div className="flex items-center gap-3 mb-2">
-                                    <Mail className="w-4 h-4 text-accent" />
-                                    <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Email</label>
+                            <div className="p-6 rounded-[2.5rem] bg-surface-highlight border border-white/5 shadow-2xl focus-within:border-primary/40 transition-all duration-500">
+                                <div className="flex items-center gap-3 mb-3">
+                                    <Mail className="w-4 h-4 text-primary" />
+                                    <label className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 italic">Email</label>
                                 </div>
                                 <input
                                     type="email"
                                     value={profile.email}
                                     onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-                                    className="w-full bg-transparent border-none text-lg font-bold text-foreground placeholder-muted-foreground/30 focus:ring-0 p-0"
-                                    placeholder="Optional"
+                                    className="w-full bg-transparent border-none text-xl font-display font-bold text-white placeholder-zinc-800 focus:ring-0 p-0 italic"
+                                    placeholder="SECURE CHANNEL"
                                 />
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="p-4 rounded-3xl bg-surface border border-glass-border shadow-sm">
-                                <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground block mb-2">Gender</label>
+                        <div className="grid grid-cols-2 gap-6">
+                            <div className="p-6 rounded-[2.5rem] bg-surface-highlight border border-white/5 shadow-2xl">
+                                <label className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 block mb-3 italic">Gender</label>
                                 <select
                                     value={profile.gender}
                                     onChange={(e) => setProfile({ ...profile, gender: e.target.value })}
-                                    className="w-full bg-transparent border-none text-lg font-bold text-foreground focus:ring-0 p-0 appearance-none"
+                                    className="w-full bg-transparent border-none text-xl font-display font-bold text-white focus:ring-0 p-0 appearance-none italic"
                                 >
-                                    <option value="" disabled className="text-background">Select</option>
-                                    <option value="male" className="text-black">Male</option>
-                                    <option value="female" className="text-black">Female</option>
-                                    <option value="other" className="text-black">Other</option>
+                                    <option value="" disabled className="bg-black">SELECT</option>
+                                    <option value="male" className="bg-black">MALE</option>
+                                    <option value="female" className="bg-black">FEMALE</option>
+                                    <option value="other" className="bg-black">OTHER</option>
                                 </select>
                             </div>
-                            <div className="p-4 rounded-3xl bg-surface border border-glass-border shadow-sm">
-                                <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground block mb-2">Date of Birth</label>
+                            <div className="p-6 rounded-[2.5rem] bg-surface-highlight border border-white/5 shadow-2xl">
+                                <label className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 block mb-3 italic">Birth Sector</label>
                                 <input
                                     type="date"
                                     value={profile.dob}
                                     onChange={(e) => setProfile({ ...profile, dob: e.target.value })}
-                                    className="w-full bg-transparent border-none text-lg font-bold text-foreground focus:ring-0 p-0"
+                                    className="w-full bg-transparent border-none text-xl font-display font-bold text-white focus:ring-0 p-0 italic"
                                 />
                             </div>
                         </div>
@@ -217,62 +218,76 @@ export default function ProfilePage() {
                 </section>
 
                 {/* Body Metrics */}
-                <section className="space-y-4">
-                    <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground px-1">Physical Metrics</h2>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="p-5 rounded-3xl bg-surface border border-glass-border shadow-sm">
-                            <div className="flex items-center gap-2 mb-2 text-primary">
-                                <Ruler className="w-4 h-4" />
-                                <span className="text-[10px] font-bold uppercase tracking-widest">Height</span>
+                <section className="space-y-6">
+                    <div className="flex items-center gap-3 px-1">
+                        <div className="w-1.5 h-6 bg-zinc-800 rounded-full" />
+                        <h2 className="text-[11px] font-black uppercase tracking-[0.4em] text-zinc-500 italic">Physical Matrix</h2>
+                    </div>
+                    <div className="grid grid-cols-2 gap-6">
+                        <div className="p-8 rounded-[3rem] bg-surface-highlight border border-white/5 shadow-2xl relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-1000">
+                                <Ruler className="w-20 h-20 text-white" />
                             </div>
-                            <div className="flex items-baseline gap-1">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-1 h-3 bg-primary rounded-full shadow-glow" />
+                                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500 italic">Elevation</span>
+                            </div>
+                            <div className="flex items-baseline gap-2 relative z-10">
                                 <input
                                     type="number"
                                     value={profile.height}
                                     onChange={(e) => setProfile({ ...profile, height: e.target.value })}
-                                    className="w-full bg-transparent border-none text-3xl font-black text-foreground p-0 focus:ring-0"
+                                    className="w-full bg-transparent border-none text-5xl font-display font-bold text-white p-0 focus:ring-0 italic"
                                     placeholder="0"
                                 />
-                                <span className="text-muted-foreground font-mono text-sm">cm</span>
+                                <span className="text-zinc-700 font-black text-xs uppercase italic">CM</span>
                             </div>
                         </div>
 
-                        <div className="p-5 rounded-3xl bg-surface border border-glass-border shadow-sm">
-                            <div className="flex items-center gap-2 mb-2 text-secondary">
-                                <Weight className="w-4 h-4" />
-                                <span className="text-[10px] font-bold uppercase tracking-widest">Weight</span>
+                        <div className="p-8 rounded-[3rem] bg-surface-highlight border border-white/5 shadow-2xl relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-1000">
+                                <Weight className="w-20 h-20 text-white" />
                             </div>
-                            <div className="flex items-baseline gap-1">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-1 h-3 bg-primary rounded-full shadow-glow" />
+                                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500 italic">Mass</span>
+                            </div>
+                            <div className="flex items-baseline gap-2 relative z-10">
                                 <input
                                     type="number"
                                     value={profile.weight}
                                     onChange={(e) => setProfile({ ...profile, weight: e.target.value })}
-                                    className="w-full bg-transparent border-none text-3xl font-black text-foreground p-0 focus:ring-0"
+                                    className="w-full bg-transparent border-none text-5xl font-display font-bold text-white p-0 focus:ring-0 italic"
                                     placeholder="0"
                                 />
-                                <span className="text-muted-foreground font-mono text-sm">kg</span>
+                                <span className="text-zinc-700 font-black text-xs uppercase italic">KG</span>
                             </div>
                         </div>
                     </div>
                 </section>
 
                 {/* Goals & Experience */}
-                <section className="space-y-4">
-                    <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground px-1">Fitness Strategy</h2>
-                    <div className="grid gap-4">
-                        <div className="p-5 rounded-3xl bg-surface border border-glass-border shadow-sm">
-                            <div className="flex items-center gap-3 mb-4">
-                                <Target className="w-5 h-5 text-accent" />
-                                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Primary Fitness Goal</span>
+                <section className="space-y-6">
+                    <div className="flex items-center gap-3 px-1">
+                        <div className="w-1.5 h-6 bg-zinc-800 rounded-full" />
+                        <h2 className="text-[11px] font-black uppercase tracking-[0.4em] text-zinc-500 italic">Combat Strategy</h2>
+                    </div>
+                    <div className="grid gap-6">
+                        <div className="p-8 rounded-[3rem] bg-surface-highlight border border-white/5 shadow-2xl">
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className="w-10 h-10 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                                    <Target className="w-5 h-5 text-primary" />
+                                </div>
+                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500 italic">Primary Objective</span>
                             </div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-3">
                                 {['Muscle Gain', 'Fat Loss', 'Strength'].map((goal) => (
                                     <button
                                         key={goal}
                                         onClick={() => setProfile({ ...profile, fitnessGoal: goal as any })}
-                                        className={`flex-1 py-3 px-2 rounded-2xl text-xs font-bold transition-all ${profile.fitnessGoal === goal
-                                                ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-105'
-                                                : 'bg-surface-highlight text-muted-foreground hover:bg-surface'
+                                        className={`flex-1 py-4 px-2 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] italic transition-all duration-500 ${profile.fitnessGoal === goal
+                                            ? 'bg-primary text-black shadow-glow scale-105 active:scale-95'
+                                            : 'bg-black/40 text-zinc-600 border border-white/5 hover:border-primary/30'
                                             }`}
                                     >
                                         {goal}
@@ -281,19 +296,21 @@ export default function ProfilePage() {
                             </div>
                         </div>
 
-                        <div className="p-5 rounded-3xl bg-surface border border-glass-border shadow-sm">
-                            <div className="flex items-center gap-3 mb-4">
-                                <Award className="w-5 h-5 text-primary" />
-                                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Experience Level</span>
+                        <div className="p-8 rounded-[3rem] bg-surface-highlight border border-white/5 shadow-2xl">
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className="w-10 h-10 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                                    <Award className="w-5 h-5 text-primary" />
+                                </div>
+                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500 italic">Combat Experience</span>
                             </div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-3">
                                 {['Beginner', 'Intermediate', 'Advanced'].map((level) => (
                                     <button
                                         key={level}
                                         onClick={() => setProfile({ ...profile, experienceLevel: level as any })}
-                                        className={`flex-1 py-3 px-2 rounded-2xl text-xs font-bold transition-all ${profile.experienceLevel === level
-                                                ? 'bg-secondary text-white shadow-lg shadow-secondary/30 scale-105'
-                                                : 'bg-surface-highlight text-muted-foreground hover:bg-surface'
+                                        className={`flex-1 py-4 px-2 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] italic transition-all duration-500 ${profile.experienceLevel === level
+                                            ? 'bg-primary text-black shadow-glow scale-105 active:scale-95'
+                                            : 'bg-black/40 text-zinc-600 border border-white/5 hover:border-primary/30'
                                             }`}
                                     >
                                         {level}
@@ -306,22 +323,22 @@ export default function ProfilePage() {
             </div>
 
             {/* Sticky Actions */}
-            <div className="fixed bottom-24 left-0 right-0 p-6 pointer-events-none">
+            <div className="fixed bottom-32 left-0 right-0 p-8 pointer-events-none z-50">
                 <div className="max-w-md mx-auto pointer-events-auto">
                     <button
                         onClick={handleSave}
                         disabled={!isFormValid || isSaving}
-                        className={`w-full py-5 rounded-3xl font-black text-lg shadow-2xl transition-all flex items-center justify-center gap-3 ${isFormValid
-                                ? 'bg-gradient-to-r from-primary to-accent text-white active:scale-95 hover:shadow-primary/40'
-                                : 'bg-surface-highlight text-muted-foreground cursor-not-allowed opacity-50'
+                        className={`w-full h-18 rounded-[2.5rem] font-black text-[12px] uppercase tracking-[0.5em] shadow-glow transition-all duration-500 flex items-center justify-center gap-4 italic ${isFormValid
+                            ? 'bg-primary text-black active:scale-95 hover:scale-[1.02]'
+                            : 'bg-zinc-900 text-zinc-700 cursor-not-allowed opacity-50'
                             }`}
                     >
                         {isSaving ? (
                             <Loader2 className="w-6 h-6 animate-spin" />
                         ) : (
                             <>
-                                <span>Save Profile</span>
-                                <CheckCircle2 className="w-5 h-5" />
+                                <span>Commit Protocol</span>
+                                <CheckCircle2 className="w-6 h-6" />
                             </>
                         )}
                     </button>
@@ -335,11 +352,11 @@ export default function ProfilePage() {
                         initial={{ opacity: 0, y: 50, scale: 0.9 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.9 }}
-                        className="fixed bottom-10 left-6 right-6 z-50 flex justify-center pointer-events-none"
+                        className="fixed bottom-20 left-6 right-6 z-50 flex justify-center pointer-events-none"
                     >
-                        <div className="bg-green-500 text-white px-8 py-4 rounded-full shadow-2xl flex items-center gap-3 pointer-events-auto">
-                            <CheckCircle2 className="w-5 h-5" />
-                            <span className="font-bold">Profile Updated Successfully!</span>
+                        <div className="bg-primary text-black px-10 py-5 rounded-full shadow-glow flex items-center gap-4 pointer-events-auto">
+                            <CheckCircle2 className="w-6 h-6" />
+                            <span className="font-black text-[10px] uppercase tracking-[0.3em] italic">Profile Updated Successfully!</span>
                         </div>
                     </motion.div>
                 )}
