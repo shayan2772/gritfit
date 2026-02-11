@@ -1,82 +1,82 @@
 "use client";
 
-const UNSPLASH_ACCESS_KEY = process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY || ""; // Would be set in .env
+const UNSPLASH_ACCESS_KEY = process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY || "";
 
 interface ImageMapping {
     [key: string]: string;
 }
 
 const CATEGORY_QUERIES: ImageMapping = {
-    chest: "man doing barbell bench press heavy gym",
-    back: "professional bodybuilder deadlift gym session",
-    shoulders: "man doing overhead shoulder press dumbbells gym",
+    chest: "professional bodybuilder barbell bench press gym",
+    back: "muscular man deadlift gym professional",
+    shoulders: "athlete overhead shoulder press dumbbells gym",
     arms: "biceps dumbbell curl arm day gym",
-    legs: "man doing heavy barbell back squat gym",
-    core: "man doing plank exercise fitness studio",
-    cardio: "man running on treadmill modern gym",
-    "full-body": "crossfit functional training group gym",
-    biceps: "man doing biceps curl exercise gym",
-    triceps: "man doing triceps extension pushdown gym",
-    abs: "athlete doing hanging leg raises abs gym"
+    legs: "heavy barbell back squat gym athlete",
+    core: "man plank exercise workout core",
+    cardio: "running on treadmill high intensity gym",
+    "full-body": "functional training crossfit athlete",
+    biceps: "biceps curl arm exercise gym",
+    triceps: "triceps pushdown exercise machine gym",
+    abs: "hanging leg raises abs workout gym"
 };
 
 const EXERCISE_QUERIES: ImageMapping = {
     // Chest
-    "bench-press": "barbell bench press proper form gym",
-    "incline-dumbbell-press": "incline dumbbell chest press workout gym",
-    "chest-fly-machine": "chest fly machine exercise gym",
-    "push-ups": "man doing push ups gym floor",
-    "cable-crossover": "cable crossover chest exercise gym",
+    "bench-press": "barbell bench press chest gym",
+    "incline-dumbbell-press": "incline dumbbell press gym",
+    "chest-fly-machine": "chest fly machine gym",
+    "push-ups": "push ups exercise gym",
+    "cable-crossover": "cable crossover chest gym",
 
     // Back
-    "lat-pulldown": "lat pulldown machine gym professional",
-    "seated-cable-row": "seated cable row back exercise gym",
-    "deadlift": "barbell deadlift proper form heavy gym",
-    "pull-up": "man doing wide grip pull ups gym",
-    "t-bar-row": "t-bar row back exercise gym",
+    "lat-pulldown": "lat pulldown back gym",
+    "seated-cable-row": "seated cable row back",
+    "deadlift": "barbell deadlift gym",
+    "pull-up": "pull up back exercise",
+    "t-bar-row": "t-bar row back gym",
 
     // Biceps
-    "barbell-curl": "barbell biceps curl proper form gym",
-    "dumbbell-curl": "hammer curl dumbbell gym alternating",
-    "hammer-curl": "hammer curl dumbbell gym",
-    "preacher-curl": "preacher curl biceps exercise gym",
-    "cable-curl": "cable biceps curl exercise gym",
+    "barbell-curl": "barbell biceps curl",
+    "dumbbell-curl": "dumbbell biceps curl",
+    "hammer-curl": "hammer curl biceps",
+    "preacher-curl": "preacher curl gym",
+    "cable-curl": "cable biceps curl",
 
     // Triceps
-    "tricep-pushdown": "rope tricep pushdown gym extension",
-    "dumbbell-overhead-extension": "dumbbell overhead triceps extension gym",
-    "skull-crusher": "skull crushers triceps exercise gym",
-    "bench-dips": "man doing tricep bench dips gym",
-    "close-grip-bench": "close grip bench press triceps gym",
+    "tricep-pushdown": "tricep pushdown rope",
+    "dumbbell-overhead-extension": "overhead tricep extension",
+    "skull-crusher": "skull crusher tricep",
+    "bench-dips": "bench dip tricep",
+    "close-grip-bench": "close grip bench press",
 
     // Legs
-    "squat": "barbell squat proper form gym",
-    "leg-press": "leg press machine gym workout",
-    "lunge": "walking lunges dumbbells gym form",
-    "romanian-deadlift": "romanian deadlift hamstrings gym",
-    "leg-curl-machine": "leg curl machine exercise gym",
+    "squat": "barbell squat legs gym",
+    "leg-press": "leg press machine gym",
+    "lunge": "lunges exercise gym",
+    "romanian-deadlift": "romanian deadlift gym",
+    "leg-curl-machine": "leg curl machine gym",
 
     // Shoulders
-    "overhead-press": "overhead shoulder press barbell gym",
-    "lateral-raise": "lateral raises dumbbells shoulders gym",
-    "front-raise": "front raises dumbbells exercise gym",
-    "arnold-press": "arnold press dumbbells shoulders gym",
-    "rear-delt-fly": "rear delt fly dumbbells exercise gym",
+    "overhead-press": "overhead press shoulders",
+    "lateral-raise": "lateral raise dumbbells",
+    "front-raise": "front raise dumbbells",
+    "arnold-press": "arnold press shoulders",
+    "rear-delt-fly": "rear delt fly shoulders",
 
     // Abs
-    "crunches": "man doing crunches abs gym mats",
-    "hanging-leg-raise": "hanging leg raises abs gym",
-    "plank": "plank exercise core gym",
-    "cable-crunch": "cable crunch abs exercise gym",
-    "russian-twist": "russian twists core exercise gym",
+    "crunches": "abdominal crunches",
+    "hanging-leg-raise": "hanging leg raise abs",
+    "plank": "plank core exercise",
+    "cable-crunch": "cable crunch abs",
+    "russian-twist": "russian twist core",
 
     // Cardio
-    "treadmill": "man running on treadmill gym",
-    "cycling": "stationary bike cycling gym",
+    "treadmill": "treadmill run cardio",
+    "cycling": "cycling exercise bike",
 
     // Full Body
-    "burpees": "man doing burpees exercise gym",
-    "kettlebell-swing": "kettlebell swing exercise gym form"
+    "burpees": "burpee exercise",
+    "kettlebell-swing": "kettlebell swing gym"
 };
 
 const SECTION_QUERIES: ImageMapping = {
@@ -86,45 +86,84 @@ const SECTION_QUERIES: ImageMapping = {
     history: "weights on gym floor cinematic lighting",
     premium: "premium luxury gym specialized equipment",
     tools: "fitness tracking app on phone gym context",
+    banner: "dark aesthetic gym atmosphere weightlifting"
 };
 
-const FALLBACK_IMAGES: ImageMapping = {
-    placeholder: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1000", // Weights shelf
-    chest: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=1000",
-    legs: "https://images.unsplash.com/photo-1434596922112-19c563067271?auto=format&fit=crop&q=80&w=1000",
+const FALLBACK_ASSETS: ImageMapping = {
+    placeholder: "photo-1534438327276-14e5300c3a48",
+    chest: "photo-1571019614242-c5c5dee9f50b",
+    back: "photo-1526506118085-60ce8714f8c5",
+    shoulders: "photo-1532384741394-fb4d3c4573f0",
+    arms: "photo-1581009146145-b5ef050c2e1e",
+    legs: "photo-1434596922112-19c563067271",
+    core: "photo-1571019613454-1cb2f99b2d8b",
+    cardio: "photo-1534438327276-14e5300c3a48",
+    "full-body": "photo-1541534741688-6078c64b595d",
+    biceps: "photo-1581009146145-b5ef050c2e1e",
+    triceps: "photo-1530822847156-5df68d60ef6b",
+    abs: "photo-1571019613454-1cb2f99b2d8b",
+    banner: "photo-1540497077202-7c8a3999166f"
+};
+
+const getUnsplashUrl = (idOrQuery: string, isId: boolean = false) => {
+    if (isId) return `https://images.unsplash.com/${idOrQuery}?auto=format&fit=crop&q=80&w=1000`;
+    return `https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1000`; // Default fallback
 };
 
 export async function getFitnessImage(id: string, type: "category" | "exercise" | "section" = "exercise"): Promise<string> {
     const queryMap = type === "category" ? CATEGORY_QUERIES : type === "section" ? SECTION_QUERIES : EXERCISE_QUERIES;
     const query = (queryMap as any)[id] || `${id} gym exercise`;
 
-    // Check local storage cache first
-    const cacheKey = `gritfit_img_cache_${id}`;
+    const cacheKey = `gritfit_img_v2_${id}`;
     if (typeof window !== "undefined") {
         const cached = localStorage.getItem(cacheKey);
         if (cached) return cached;
     }
 
     try {
-        // We'll use a public search API or a mock service if key is missing
-        // For demonstration purposes, we use Unsplash Source (deprecated but still works for many queries) 
-        // or a reliable developer proxy in a real production app.
-        // Falling back to a structured Unsplash search URL which works as a dynamic source.
-        const encodedQuery = encodeURIComponent(query);
-        const imageUrl = `https://source.unsplash.com/featured/800x1000/?${encodedQuery}`;
-
-        // In a real implementation with Access Key:
-        // const res = await fetch(`https://api.unsplash.com/photos/random?query=${encodedQuery}&client_id=${UNSPLASH_ACCESS_KEY}`);
-        // const data = await res.json();
-        // const imageUrl = data.urls.regular;
-
-        if (typeof window !== "undefined") {
-            localStorage.setItem(cacheKey, imageUrl);
+        if (!UNSPLASH_ACCESS_KEY) {
+            const fallbackId = FALLBACK_ASSETS[id] || FALLBACK_ASSETS.placeholder;
+            // For exercises without direct fallbacks, we use a more descriptive gym search URL format 
+            // but since source.unsplash is unreliable, we'll map them to the closest category if possible
+            return getUnsplashUrl(fallbackId, true);
         }
 
-        return imageUrl;
+        const res = await fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&client_id=${UNSPLASH_ACCESS_KEY}&per_page=1&orientation=portrait`);
+        const data = await res.json();
+
+        if (data.results && data.results.length > 0) {
+            const imageUrl = data.results[0].urls.regular;
+            if (typeof window !== "undefined") {
+                localStorage.setItem(cacheKey, imageUrl);
+            }
+            return imageUrl;
+        }
+
+        const fallbackId = FALLBACK_ASSETS[id] || FALLBACK_ASSETS.placeholder;
+        return getUnsplashUrl(fallbackId, true);
     } catch (error) {
         console.error("Image Service Error:", error);
-        return FALLBACK_IMAGES[id] || FALLBACK_IMAGES.placeholder;
+        const fallbackId = FALLBACK_ASSETS[id] || FALLBACK_ASSETS.placeholder;
+        return getUnsplashUrl(fallbackId, true);
+    }
+}
+
+export async function searchUnsplashImages(query: string, count: number = 10): Promise<string[]> {
+    try {
+        if (!UNSPLASH_ACCESS_KEY) {
+            return Array(count).fill(getUnsplashUrl(FALLBACK_ASSETS.placeholder, true));
+        }
+
+        const res = await fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&client_id=${UNSPLASH_ACCESS_KEY}&per_page=${count}`);
+        const data = await res.json();
+
+        if (data.results && Array.isArray(data.results)) {
+            return data.results.map((img: any) => img.urls.regular);
+        }
+
+        return [];
+    } catch (error) {
+        console.error("Search Unsplash Images Error:", error);
+        return [];
     }
 }

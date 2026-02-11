@@ -3,6 +3,9 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Calculator, Activity, ChevronRight } from "lucide-react";
+import { getFitnessImage } from "@/lib/imageService";
+import { OptimizedImage } from "@/components/OptimizedImage";
+import { useState, useEffect } from "react";
 
 const tools = [
     {
@@ -26,11 +29,28 @@ const tools = [
 ];
 
 export default function ToolsPage() {
+    const [bannerImg, setBannerImg] = useState("");
+    useEffect(() => {
+        const fetchBanner = async () => {
+            const url = await getFitnessImage("tools", "section");
+            setBannerImg(url);
+        };
+        fetchBanner();
+    }, []);
     return (
         <div className="min-h-screen px-6 pt-16 pb-32 bg-background max-w-lg mx-auto overflow-x-hidden relative">
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 blur-[100px] -z-10" />
 
-            <header className="mb-12">
+            <header className="mb-12 h-[35vh] flex flex-col justify-end p-8 relative -mx-6 -mt-16 overflow-hidden">
+                {bannerImg && (
+                    <OptimizedImage
+                        src={bannerImg}
+                        alt="Tools"
+                        containerClassName="absolute inset-0 z-0"
+                        className="brightness-[0.35] scale-105"
+                    />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent z-[1]" />
                 <div className="flex items-center gap-2 mb-2">
                     <div className="w-1 h-3 bg-primary rounded-full shadow-glow" />
                     <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary drop-shadow-md">Operational Support</p>

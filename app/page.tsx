@@ -10,6 +10,8 @@ import { DailyGoalModal } from "@/components/DailyGoalModal";
 import { WorkoutPlanList } from "@/components/WorkoutPlanList";
 import { WorkoutPlanDetail } from "@/components/WorkoutPlanDetail";
 import { WorkoutPlan } from "@/lib/plans";
+import { OptimizedImage } from "@/components/OptimizedImage";
+import { getFitnessImage } from "@/lib/imageService";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -41,9 +43,15 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<"train" | "plans">("train");
   const [selectedPlan, setSelectedPlan] = useState<WorkoutPlan | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [bannerUrl, setBannerUrl] = useState<string>("");
 
   useEffect(() => {
     setMounted(true);
+    const fetchBanner = async () => {
+      const url = await getFitnessImage("banner", "section");
+      setBannerUrl(url);
+    };
+    fetchBanner();
     const today = new Date().toISOString().split('T')[0].replace(/-/g, '');
     const goalKey = `gritfit_goal_${today}`;
     const savedGoal = localStorage.getItem(goalKey);
@@ -106,16 +114,26 @@ export default function Home() {
         ) : (
           <>
             {/* ─── HERO SECTION ─── */}
-            <header className="mb-10 relative overflow-hidden">
-              {/* Cinematic gradient glow */}
-              <div className="absolute -top-20 -left-10 w-60 h-60 bg-primary/15 blur-[120px] rounded-full -z-10" />
-              <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 blur-[80px] rounded-full -z-10" />
+            <header className="mb-10 relative overflow-hidden rounded-[2.5rem] border border-white/5 shadow-2xl p-8">
+              {/* Dynamic Unsplash Banner */}
+              {bannerUrl && (
+                <OptimizedImage
+                  src={bannerUrl}
+                  alt="Gym Banner"
+                  containerClassName="absolute inset-0 z-0"
+                  className="brightness-[0.4] scale-105"
+                />
+              )}
 
-              <div className="flex justify-between items-start mb-8">
+              {/* Cinematic gradient glow */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-10" />
+              <div className="absolute -top-20 -left-10 w-60 h-60 bg-primary/10 blur-[120px] rounded-full z-10" />
+
+              <div className="relative z-20 flex justify-between items-start mb-10">
                 <div>
                   <div className="flex items-center gap-2 mb-3">
-                    <div className="w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_rgba(198,255,0,0.8)] animate-pulse" />
-                    <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary">
+                    <div className="w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_15px_rgba(198,255,0,1)] animate-pulse" />
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary drop-shadow-lg">
                       Elite Protocol
                     </p>
                   </div>

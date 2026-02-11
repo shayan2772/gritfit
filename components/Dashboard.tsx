@@ -5,6 +5,8 @@ import { TrendingUp, Activity, Calendar, Zap, Target, AlertCircle } from "lucide
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { getFitnessImage } from "@/lib/imageService";
+import { OptimizedImage } from "./OptimizedImage";
 
 
 
@@ -13,9 +15,21 @@ export function Dashboard() {
     const [dailyGoal] = useLocalStorage<any>("gritfit_daily_goal_current", null);
     const [activePlan] = useLocalStorage<any>("gritfit_active_plan", null);
     const [mounted, setMounted] = useState(false);
+    const [rankImg, setRankImg] = useState("");
+    const [planImg, setPlanImg] = useState("");
+    const [workoutImg, setWorkoutImg] = useState("");
 
     useEffect(() => {
         setMounted(true);
+        const fetchImages = async () => {
+            const rank = await getFitnessImage("premium", "section");
+            const plan = await getFitnessImage("plans", "section");
+            const workout = await getFitnessImage("banner", "section");
+            setRankImg(rank);
+            setPlanImg(plan);
+            setWorkoutImg(workout);
+        };
+        fetchImages();
     }, []);
 
     if (!mounted) return null;
@@ -68,7 +82,16 @@ export function Dashboard() {
             <div className="grid grid-cols-2 gap-4">
                 {/* ─── Active Rank Card ─── */}
                 <div className="col-span-2 p-7 rounded-3xl bg-[#1A1A1A] border border-white/5 shadow-card relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-6 opacity-[0.04] group-hover:opacity-[0.08] group-hover:scale-110 transition-all duration-700">
+                    {rankImg && (
+                        <OptimizedImage
+                            src={rankImg}
+                            alt="Rank"
+                            containerClassName="absolute inset-0 z-0"
+                            className="brightness-[0.25] group-hover:scale-110 transition-transform duration-1000"
+                        />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-[#1A1A1A] via-transparent to-transparent z-[1]" />
+                    <div className="absolute top-0 right-0 p-6 opacity-[0.04] group-hover:opacity-[0.08] group-hover:scale-110 transition-all duration-700 z-[1]">
                         <TrendingUp className="w-36 h-36 text-primary" />
                     </div>
                     <div className="relative z-10 space-y-5">
@@ -105,7 +128,16 @@ export function Dashboard() {
                 {/* Active Plan Card */}
                 {activePlan && (
                     <div className="col-span-2 p-6 rounded-3xl bg-[#1A1A1A] border border-white/5 relative overflow-hidden group shadow-card">
-                        <div className="absolute -right-4 -top-4 opacity-[0.04] group-hover:scale-110 transition-all duration-700">
+                        {planImg && (
+                            <OptimizedImage
+                                src={planImg}
+                                alt="Plan"
+                                containerClassName="absolute inset-0 z-0"
+                                className="brightness-[0.3] group-hover:scale-110 transition-transform duration-1000"
+                            />
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A1A] to-transparent z-[1]" />
+                        <div className="absolute -right-4 -top-4 opacity-[0.04] group-hover:scale-110 transition-all duration-700 z-[1]">
                             <Calendar className="w-36 h-36 text-primary" />
                         </div>
                         <div className="relative z-10 flex justify-between items-center">
@@ -127,7 +159,15 @@ export function Dashboard() {
                 {/* Scheduled Workout CTA */}
                 {schedule?.dayPlan?.type === "Workout" && (
                     <div className="col-span-2 p-7 rounded-3xl bg-primary text-black shadow-[0_10px_40px_-10px_rgba(198,255,0,0.35)] group cursor-pointer active:scale-[0.98] transition-all relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:scale-110 transition-transform">
+                        {workoutImg && (
+                            <OptimizedImage
+                                src={workoutImg}
+                                alt="Workout"
+                                containerClassName="absolute inset-0 z-0"
+                                className="brightness-[0.8] opacity-15 grayscale group-hover:scale-110 transition-transform duration-1000"
+                            />
+                        )}
+                        <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:scale-110 transition-transform z-[1]">
                             <Activity className="w-24 h-24" />
                         </div>
                         <div className="relative z-10 flex justify-between items-center">

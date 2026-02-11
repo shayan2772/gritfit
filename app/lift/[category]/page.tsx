@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 import { ExerciseThumbnail } from "@/components/ExerciseThumbnail";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { getFitnessImage } from "@/lib/imageService";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 export default function CategoryPage() {
     const params = useParams();
@@ -16,10 +18,16 @@ export default function CategoryPage() {
     const exercises = getExercisesByCategory(category);
     const [activePlan] = useLocalStorage<any>("gritfit_active_plan", null);
     const [mounted, setMounted] = useState(false);
+    const [headerImg, setHeaderImg] = useState("");
 
     useEffect(() => {
         setMounted(true);
-    }, []);
+        const fetchHeader = async () => {
+            const url = await getFitnessImage(category, "category");
+            setHeaderImg(url);
+        };
+        fetchHeader();
+    }, [category]);
 
     if (!mounted) return null;
     if (!exercises.length) return notFound();
@@ -37,20 +45,31 @@ export default function CategoryPage() {
 
     return (
         <div className="min-h-screen px-6 pt-16 pb-32 max-w-lg mx-auto">
-            <header className="mb-12 flex items-center gap-6 relative">
-                <div className="absolute -top-10 -left-10 w-32 h-32 bg-primary/10 blur-[80px] -z-10" />
-                <Link
-                    href="/"
-                    className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 hover:scale-110 active:scale-95 transition-all duration-300"
-                >
-                    <ChevronLeft className="w-6 h-6" />
-                </Link>
-                <div>
+            <header className="mb-12 h-[35vh] flex flex-col justify-end p-8 relative -mx-6 -mt-16 overflow-hidden">
+                {headerImg && (
+                    <OptimizedImage
+                        src={headerImg}
+                        alt={category}
+                        containerClassName="absolute inset-0 z-0"
+                        className="brightness-[0.35] scale-105"
+                    />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent z-[1]" />
+                <div className="absolute top-10 left-6 z-20">
+                    <Link
+                        href="/"
+                        className="w-12 h-12 rounded-2xl bg-black/40 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-white/10 hover:scale-110 active:scale-95 transition-all duration-300"
+                    >
+                        <ChevronLeft className="w-5 h-5" />
+                    </Link>
+                </div>
+
+                <div className="relative z-10 w-full">
                     <div className="flex items-center gap-2 mb-2">
                         <div className="w-1 h-3 bg-primary rounded-full shadow-glow" />
                         <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary drop-shadow-md">Training Protocol</p>
                     </div>
-                    <h1 className="text-5xl font-display font-bold capitalize tracking-tighter text-white italic uppercase leading-none drop-shadow-2xl">
+                    <h1 className="text-6xl font-display font-bold capitalize tracking-tighter text-white italic uppercase leading-none drop-shadow-2xl">
                         {category}
                     </h1>
                 </div>

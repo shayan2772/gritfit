@@ -36,23 +36,27 @@ export function OptimizedImage({ src, alt, className, containerClassName, priori
                 )}
             </AnimatePresence>
 
-            <Image
-                src={imageSrc}
-                alt={alt}
-                fill
-                priority={priority}
-                className={cn(
-                    "object-cover transition-all duration-700",
-                    isLoading ? "scale-110 blur-xl grayscale" : "scale-100 blur-0 grayscale-0",
-                    className
-                )}
-                onLoadingComplete={() => setIsLoading(false)}
-                onError={() => {
-                    // Fallback to a safe placeholder if the dynamic image fails
-                    setImageSrc("https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1000");
-                    setIsLoading(false);
-                }}
-            />
+            {imageSrc ? (
+                <Image
+                    src={imageSrc}
+                    alt={alt}
+                    fill
+                    priority={priority}
+                    className={cn(
+                        "object-cover transition-all duration-700",
+                        isLoading ? "scale-110 blur-xl grayscale" : "scale-100 blur-0 grayscale-0",
+                        className
+                    )}
+                    onLoad={() => setIsLoading(false)}
+                    onError={() => {
+                        // Fallback to a safe placeholder if the dynamic image fails
+                        setImageSrc("https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1000");
+                        setIsLoading(false);
+                    }}
+                />
+            ) : (
+                <div className="absolute inset-0 bg-zinc-900 animate-pulse" />
+            )}
         </div>
     );
 }

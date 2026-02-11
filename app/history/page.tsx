@@ -9,12 +9,24 @@ import {
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { getFitnessImage } from "@/lib/imageService";
+import { OptimizedImage } from "@/components/OptimizedImage";
+import { useEffect } from "react";
 
 type HistoryTab = 'Workouts' | 'Metrics' | 'Diet';
 
 export default function HistoryPage() {
     const [activeTab, setActiveTab] = useState<HistoryTab>('Workouts');
     const [expandedItem, setExpandedItem] = useState<number | null>(null);
+    const [bannerImg, setBannerImg] = useState("");
+
+    useEffect(() => {
+        const fetchBanner = async () => {
+            const url = await getFitnessImage("history", "section");
+            setBannerImg(url);
+        };
+        fetchBanner();
+    }, []);
 
     const [workouts] = useLocalStorage<any[]>("gritfit_workouts", []);
     const [bmiHistory] = useLocalStorage<any[]>("gritfit_bmi_history", []);
@@ -248,9 +260,20 @@ export default function HistoryPage() {
 
     return (
         <div className="min-h-screen px-6 pt-12 pb-32 bg-background transition-colors duration-300">
-            <header className="mb-8">
-                <h1 className="text-4xl font-bold text-white tracking-tight mb-2">History</h1>
-                <p className="text-muted font-medium text-sm">Review your progress & past efforts</p>
+            <header className="mb-8 h-[30vh] flex flex-col justify-end p-8 relative -mx-6 -mt-12 overflow-hidden">
+                {bannerImg && (
+                    <OptimizedImage
+                        src={bannerImg}
+                        alt="History"
+                        containerClassName="absolute inset-0 z-0"
+                        className="brightness-[0.35] scale-105"
+                    />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent z-[1]" />
+                <div className="relative z-10">
+                    <h1 className="text-5xl font-display font-black text-white tracking-tight mb-2 uppercase italic leading-none">History</h1>
+                    <p className="text-primary font-black text-[10px] uppercase tracking-[0.4em] italic drop-shadow-md">Operational Archives</p>
+                </div>
             </header>
 
             {renderSummary()}

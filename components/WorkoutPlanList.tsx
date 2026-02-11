@@ -4,9 +4,33 @@ import { motion } from "framer-motion";
 import { WORKOUT_PLANS, WorkoutPlan } from "@/lib/plans";
 import { Trophy, Flame, Zap, Target, ArrowRight, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
+import { getFitnessImage } from "@/lib/imageService";
+import { OptimizedImage } from "./OptimizedImage";
 
 interface WorkoutPlanListProps {
     onSelectPlan: (plan: WorkoutPlan) => void;
+}
+
+function PlanCardImage({ focus }: { focus: string }) {
+    const [img, setImg] = useState("");
+    useEffect(() => {
+        const fetchImg = async () => {
+            const url = await getFitnessImage(focus.toLowerCase(), "category");
+            setImg(url);
+        };
+        fetchImg();
+    }, [focus]);
+
+    if (!img) return null;
+    return (
+        <OptimizedImage
+            src={img}
+            alt={focus}
+            containerClassName="absolute inset-0 z-0"
+            className="brightness-[0.3] group-hover:scale-110 transition-transform duration-1000"
+        />
+    );
 }
 
 export function WorkoutPlanList({ onSelectPlan }: WorkoutPlanListProps) {
@@ -41,7 +65,9 @@ export function WorkoutPlanList({ onSelectPlan }: WorkoutPlanListProps) {
                         onClick={() => onSelectPlan(plan)}
                         className="group relative overflow-hidden p-8 rounded-[3rem] bg-surface-highlight border border-white/5 hover:border-primary/40 transition-all duration-500 cursor-pointer shadow-2xl"
                     >
-                        <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-1000 text-primary">
+                        <PlanCardImage focus={plan.focus} />
+                        <div className="absolute inset-0 bg-gradient-to-tr from-[#1A1A1A] via-transparent to-transparent z-[1]" />
+                        <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-1000 text-primary z-[1]">
                             {getLevelIcon(plan.level)}
                         </div>
 

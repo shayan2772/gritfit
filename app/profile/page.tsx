@@ -9,6 +9,8 @@ import {
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/context/ThemeContext";
+import { getFitnessImage } from "@/lib/imageService";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 interface Profile {
     image: string;
@@ -28,6 +30,7 @@ export default function ProfilePage() {
     const [isSaving, setIsSaving] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [bannerImg, setBannerImg] = useState("");
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [profile, setProfile] = useLocalStorage<Profile>("gritfit_profile_v2", {
@@ -48,6 +51,13 @@ export default function ProfilePage() {
     useEffect(() => {
         // Simulate loading for skeleton effect
         const timer = setTimeout(() => setIsLoading(false), 800);
+
+        const fetchBanner = async () => {
+            const url = await getFitnessImage("profile", "section");
+            setBannerImg(url);
+        };
+        fetchBanner();
+
         return () => clearTimeout(timer);
     }, []);
 
@@ -97,9 +107,19 @@ export default function ProfilePage() {
 
     return (
         <div className="min-h-screen px-6 pt-16 pb-40 bg-background transition-colors duration-500 max-w-lg mx-auto overflow-x-hidden">
-            <header className="mb-12 flex items-center justify-between relative">
+            <header className="mb-12 h-[35vh] flex flex-col justify-end p-8 relative -mx-6 -mt-16 overflow-hidden">
+                {bannerImg && (
+                    <OptimizedImage
+                        src={bannerImg}
+                        alt="Profile"
+                        containerClassName="absolute inset-0 z-0"
+                        className="brightness-[0.35] scale-105"
+                    />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent z-[1]" />
                 <div className="absolute -top-10 -left-10 w-40 h-40 bg-primary/10 blur-[100px] -z-10" />
-                <div className="flex items-center gap-6">
+
+                <div className="flex items-center gap-6 relative z-10 w-full mb-4">
                     <div className="relative group">
                         <div className="w-24 h-24 rounded-[2.5rem] bg-gradient-to-br from-primary via-primary/50 to-zinc-900 p-[2px] shadow-2xl group-active:scale-95 transition-all duration-300">
                             <div className="w-full h-full rounded-[2.5rem] bg-black flex items-center justify-center overflow-hidden relative">
